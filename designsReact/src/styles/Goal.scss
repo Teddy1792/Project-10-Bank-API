@@ -1,0 +1,24 @@
+.goal{
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 30%;
+
+    .imgBox{
+        width: 100px;
+        height: 100px;
+        border: 10px solid #00bc77;
+        border-radius: 50%;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img{
+            width: 100px;
+        }
+    }
+}

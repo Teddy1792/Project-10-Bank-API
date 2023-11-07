@@ -1,0 +1,11 @@
+section{
+    display: flex;
+    flex-direction: column;
+
+    .goals{
+        display: flex;
+        flex-direction: row;
+        background-color: white;
+        align-items: flex-start;
+    }
+}
