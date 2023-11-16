@@ -1,7 +1,7 @@
 import '../styles/Transaction.scss';
 import PropTypes from 'prop-types';
 
-export function Transaction({ accountTitle, accountNumber, availableBalance }) {
+function Transaction({ accountTitle, accountNumber, availableBalance }) {
   return (
     <section className='transaction'>
       <div className='account-content-wrapper'>
@@ -21,3 +21,5 @@ Transaction.propTypes = {
   accountNumber: PropTypes.string.isRequired,
   availableBalance: PropTypes.string.isRequired
 };
+
+export default Transaction;

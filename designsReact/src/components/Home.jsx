@@ -1,11 +1,11 @@
 import '../styles/Home.scss';
-import { Banner } from './Banner';
-import { Goal } from './Goal';
+import Banner from './Banner';
+import Goal from './Goal';
 import chatIcon from '../assets/icon-chat.png';
 import moneyIcon from '../assets/icon-money.png';
 import securityIcon from '../assets/icon-security.png';
 
-export function Home() {
+function Home() {
     return (
         <section>
             <Banner />
@@ -29,3 +29,5 @@ export function Home() {
         </section>
     );
 }
+
+export default Home;

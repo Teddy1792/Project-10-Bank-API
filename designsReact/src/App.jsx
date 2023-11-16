@@ -1,6 +1,6 @@
-import { CustomRouter } from './components/CustomRouter';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
+import CustomRouter from './components/CustomRouter';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   return (

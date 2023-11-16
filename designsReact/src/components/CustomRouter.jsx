@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
-import { Account } from './Account';
-import { Home } from './Home';
-import { SignIn } from './SignIn';
+import Account from './Account';
+import Home from './Home';
+import SignIn from './SignIn';
 
-export function CustomRouter () {
+function CustomRouter() {
   return (
     <Routes>
         <Route path="/" element={<Home />} />
@@ -12,3 +12,9 @@ export function CustomRouter () {
     </Routes>
   );
 }
+
+export default CustomRouter;
+
+
+//faire étape par étape : notamment sur l'API (récuper d'abord le fetch sur SignIn, puis checker le token, etc etc.)
+//useless props for account and customrouter (because redux!)

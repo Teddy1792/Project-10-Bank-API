@@ -1,7 +1,7 @@
 import '../styles/Goal.scss';
 import PropTypes from 'prop-types';
 
-export function Goal({ icon, title, description }) {
+function Goal({ icon, title, description }) {
   return (
     <div className="goal">
         <div className='imgBox'>
@@ -9,7 +9,7 @@ export function Goal({ icon, title, description }) {
         </div>
         <h3 className="feature-item-title">{title}</h3>
         <p>{description}</p>
-      </div>
+    </div>
   );
 }
 
@@ -17,4 +17,6 @@ Goal.propTypes = {
     icon: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired
-  };
+};
+
+export default Goal;

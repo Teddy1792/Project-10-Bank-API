@@ -1,13 +1,31 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'; // Import useSelector
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import argentBank from '../assets/argentBankLogo.png';
+import { clearAuthToken } from '../serviceLayer/authActions';
 import '../styles/Header.scss';
 
-export function Header() {
+function Header() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const location = useLocation();
     const isAccountPage = location.pathname === '/Account';
+
+    // Retrieve the user's first name from the Redux store
+    const firstName = useSelector((state) => state.auth.user?.firstName);
+
+    const handleLogout = () => {
+        // Clear the token from storage
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+
+        // Update the global state using Redux
+        dispatch(clearAuthToken());
+
+        // Redirect to the home page
+        navigate('/');
+    };
 
     return (
         <header>
@@ -18,20 +36,20 @@ export function Header() {
                     alt="Argent Bank Logo"
                 />
             </NavLink>
-            <div className='signIn'>
+            <div className='mainRight'>
                 {isAccountPage ? (
-                    <NavLink to="/" className="main-nav-item">
+                    <div className="account-section">
                         <div className='userName'>
                             <FontAwesomeIcon className='iconUser' icon={faUserCircle} />
-                            UserName
+                            {firstName ? firstName : "UserName"} {/* Display firstName if available */}
                         </div>
-                        <div className='SignOut'>
+                        <div className='signOut' onClick={handleLogout}>
                             <FontAwesomeIcon className='iconSignOut' icon={faSignOutAlt} />
                             Sign Out
                         </div>
-                    </NavLink>
+                    </div>
                 ) : (
-                    <NavLink to="/signIn" className="main-nav-item">
+                    <NavLink to="/signIn" className="main-nav-item signIn">
                         <FontAwesomeIcon className='iconUser' icon={faUserCircle} />
                         Sign In
                     </NavLink>
@@ -40,3 +58,5 @@ export function Header() {
         </header>
     );
 }
+
+export default Header;

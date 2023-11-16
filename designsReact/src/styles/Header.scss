@@ -8,7 +8,6 @@ header {
 
   .main-nav-logo {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 10px;
 
@@ -18,33 +17,51 @@ header {
     }
   }
 
-  .signIn {
+  .mainRight {
+    display: flex;
+    align-items: center;
     padding: 15px;
-    
-    &,
-    .main-nav-item {
+
+    .account-section {
       display: flex;
-      flex-direction: row;
+      align-items: center;
       color: #2c3e50;
-      font-weight: 500;
       font-weight: bold;
 
-      .userName{
+      .userName {
         margin-right: 0.5rem;
+        display: flex;
+        align-items: center;
+
+        .iconUser {
+          margin-right: 5px;
+        }
+      }
+
+      .signOut {
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        .iconSignOut {
+          margin-right: 5px;
+        }
+      }
+    }
+
+    .signIn {
+      color: #2c3e50;
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
       }
 
       .iconUser{
         margin-right: 5px;
-      }
-
-      .SignOut{
-        display: flex;
-        align-items: center;
-        margin-left: 0.5rem;
-
-        .iconSignOut{
-          margin-right: 5px;
-        }
       }
     }
   }
