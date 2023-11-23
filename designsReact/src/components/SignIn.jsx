@@ -2,20 +2,20 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, fetchUserProfile } from '../serviceLayer/authService';
 import '../styles/SignIn.scss';
 
 function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem('token') || sessionStorage.getItem('token') || '');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.authToken); // Retrieve the token from Redux state
 
   useEffect(() => {
     if (token) {
+      //check sessionStorage to automatically log in if there's already a token
       dispatch(fetchUserProfile(token))
         .then(() => {
           navigate('/Account');
@@ -29,9 +29,10 @@ function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await dispatch(loginUser({ email, password }, rememberMe));
+      const response = await dispatch(loginUser({ email, password }));
       if (response && response.status === 200 && response.body && response.body.token) {
-        setToken(response.body.token);  // Update the token state to trigger the useEffect
+
+        navigate('/Account');
       } else {
         console.error('Login failed:', response.message);
       }
@@ -39,7 +40,6 @@ function SignIn() {
       console.error(error.customMessage || 'Login failed');
     }
   };
-
 
   return (
     <main className="bg-dark">
@@ -71,8 +71,6 @@ function SignIn() {
             <input
               type="checkbox"
               id="remember-me"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
             />
             <label htmlFor="remember-me">Remember me</label>
           </div>
@@ -84,3 +82,7 @@ function SignIn() {
 }
 
 export default SignIn;
+
+//finir le feature de modification et sauvegarde du nom 
+//5 endpoints pour mon swagger normalement
+//typescript pour uniquement le store

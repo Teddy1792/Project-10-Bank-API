@@ -70,4 +70,36 @@ export const fetchUserProfile = (token) => async (dispatch) => {
   }
 };
 
+// Function for updating user profile
+export const updateUserProfile = (token, updatedData) => async (dispatch) => {
+  try {
+    const updateResponse = await fetch(`${API_URL}/user/profile`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (!updateResponse.ok) {
+      const error = new Error(`HTTP error! status: ${updateResponse.status}`);
+      error.response = updateResponse;
+      error.data = await updateResponse.text().catch(() => '');
+      throw error;
+    }
+
+    const updateData = await updateResponse.json();
+
+    if (updateData && updateData.body) {
+      dispatch(setUserDetails(updateData.body)); // Update user details in Redux store
+    }
+
+    return updateData;
+  } catch (error) {
+    console.error('Error updating user profile:', error.message, error.data);
+    error.customMessage = 'An error occurred while trying to update user profile.';
+    throw error;
+  }
+};
 

@@ -1,5 +1,5 @@
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'; // Import useSelector
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import argentBank from '../assets/argentBankLogo.png';
@@ -16,9 +16,9 @@ function Header() {
     const firstName = useSelector((state) => state.auth.user?.firstName);
 
     const handleLogout = () => {
-        // Clear the token from storage
-        localStorage.removeItem('token');
-        sessionStorage.removeItem('token');
+        // Clear the token from both localStorage and sessionStorage
+        localStorage.removeItem('authToken');
+        sessionStorage.removeItem('authToken');
 
         // Update the global state using Redux
         dispatch(clearAuthToken());
