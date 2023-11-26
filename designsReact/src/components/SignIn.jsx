@@ -82,7 +82,3 @@ function SignIn() {
 }
 
 export default SignIn;
-
-//finir le feature de modification et sauvegarde du nom 
-//5 endpoints pour mon swagger normalement
-//typescript pour uniquement le store

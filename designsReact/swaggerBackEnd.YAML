@@ -138,3 +138,7 @@ definitions:
         type: string
         description: Note added to the transaction
       # ... other properties of Transaction
+
+
+// ajouter une fonction /transaction/{transactionid}/details 
+//delete!!
