@@ -8,6 +8,11 @@ host: localhost:3001
 basePath: /api/v1
 schemes:
   - http
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 paths:
   /user/login:
     post:
@@ -61,17 +66,18 @@ paths:
 
   /user/profile:
     post:
-      security:
-        - Bearer: []
       tags:
         - User Module
       summary: User Profile API
       description: API for fetching a user profile
+      security:
+        - Bearer: []
       parameters:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
       produces:
         - application/json
       responses:
@@ -85,17 +91,18 @@ paths:
           description: Internal Server Error
 
     put:
-      security:
-        - Bearer: []
       tags:
         - User Module
       summary: User Profile API
       description: API for updating a user profile
+      security:
+        - Bearer: []
       parameters:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
         - in: body
           name: body
           description: Update user profile attributes
@@ -106,11 +113,13 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successfully
+          description: User profile updated successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
+        '401':
+          description: Unauthorized
         '500':
           description: Internal Server Error
 
@@ -119,22 +128,18 @@ paths:
       tags:
         - Transaction Module
       summary: Get All Transactions
-      description: API for fetching all transactions with additional data
-      parameters:
-        - in: header
-          name: Authorization
-          description: Attach Bearer JWT token
-          required: true
-          type: string
+      description: API for fetching all transactions
+      security:
+        - Bearer: []
       produces:
         - application/json
       responses:
         '200':
-          description: List of all transactions retrieved successfully with additional data
+          description: List of all transactions retrieved successfully
           schema:
             type: array
             items:
-              $ref: '#/definitions/TransactionWithDetails' # Reference to updated transaction definition
+              $ref: '#/definitions/Transaction'
         '401':
           description: Unauthorized
         '500':
@@ -146,6 +151,8 @@ paths:
         - Transaction Module
       summary: Get Specific Transaction
       description: API for fetching a specific transaction by its ID
+      security:
+        - Bearer: []
       parameters:
         - in: header
           name: Authorization
@@ -163,7 +170,7 @@ paths:
         '200':
           description: Transaction retrieved successfully
           schema:
-            $ref: '#/definitions/TransactionWithDetails' # Reference to updated transaction definition
+            $ref: '#/definitions/Transaction'
         '401':
           description: Unauthorized
         '404':
@@ -176,6 +183,8 @@ paths:
         - Transaction Module
       summary: Update Transaction
       description: API for updating a transaction's category and notes
+      security:
+        - Bearer: []
       parameters:
         - in: header
           name: Authorization
@@ -199,7 +208,7 @@ paths:
         '200':
           description: Transaction updated successfully
           schema:
-            $ref: '#/definitions/TransactionWithDetails' # Reference to updated transaction definition
+            $ref: '#/definitions/Transaction'
         '400':
           description: Invalid Transaction ID or Fields
         '401':
@@ -209,13 +218,9 @@ paths:
         '500':
           description: Internal Server Error
 
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
-
 definitions:
+  # ... Existing definitions ...
+
   User:
     properties:
       email:
@@ -269,29 +274,25 @@ definitions:
       lastName:
         type: string
 
-  TransactionWithDetails:
+  TransactionUpdate:
+    type: object
+    properties:
+      category:
+        type: string
+        description: Category of the transaction
+      note:
+        type: string
+        description: Note added to the transaction
+
+  Transaction:
     type: object
     properties:
       id:
         type: string
         description: Unique identifier for the transaction
-      account:
-        type: string
-        description: The bank account linked to the transaction
-      description:
-        type: string
-        description: The transaction description
-      date:
-        type: string
-        format: date-time
-        description: The date of the transaction
-      amount:
-        type: number
-        format: float
-        description: The amount of the transaction
-      balance:
-        type: number
-        format: float
-        description: The balance of the account when the transaction occurred
       category:
-        type:
+        type: string
+        description: Category of the transaction
+      note:
+        type: string
+        description: Note added to the transaction
