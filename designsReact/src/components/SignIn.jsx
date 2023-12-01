@@ -29,13 +29,13 @@ function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await dispatch(loginUser({ email, password }));
-      if (response && response.status === 200 && response.body && response.body.token) {
+      await dispatch(loginUser({ email, password }));
+      // if (response && response.status === 200 && response.body && response.body.token) {
 
-        navigate('/Account');
-      } else {
-        console.error('Login failed:', response.message);
-      }
+      //   navigate('/Account');
+      // } else {
+      //   console.error('Login failed:', response.message);
+      // }
     } catch (error) {
       console.error(error.customMessage || 'Login failed');
     }

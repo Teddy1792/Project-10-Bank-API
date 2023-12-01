@@ -15,6 +15,3 @@ function CustomRouter() {
 
 export default CustomRouter;
 
-
-//faire étape par étape : notamment sur l'API (récuper d'abord le fetch sur SignIn, puis checker le token, etc etc.)
-//useless props for account and customrouter (because redux!)
