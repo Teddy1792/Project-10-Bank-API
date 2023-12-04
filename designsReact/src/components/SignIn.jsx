@@ -1,20 +1,29 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+
+// Import your actions from a separate module
 import { loginUser, fetchUserProfile } from '../serviceLayer/authService';
+
 import '../styles/SignIn.scss';
 
 function SignIn() {
+  // State for email and password
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // Get navigation function and dispatch from hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token = useSelector(state => state.auth.authToken); // Retrieve the token from Redux state
+
+  // Get the token from Redux state
+  const token = useSelector(state => state.auth.authToken);
 
   useEffect(() => {
     if (token) {
+      // Fetch user profile when token exists
       dispatch(fetchUserProfile(token))
         .then(() => {
           navigate('/Account');
@@ -25,9 +34,11 @@ function SignIn() {
     }
   }, [token, dispatch, navigate]);
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      // Dispatch the login action
       await dispatch(loginUser({ email, password }));
     } catch (error) {
       console.error(error.customMessage || 'Login failed');
