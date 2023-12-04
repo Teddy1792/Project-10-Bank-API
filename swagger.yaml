@@ -127,23 +127,33 @@ paths:
     get:
       tags:
         - Transaction Module
-      summary: Get All Transactions
-      description: API for fetching all transactions
+      summary: Get Transactions for the current month
+      description: API for fetching transactions for the current month
       security:
         - Bearer: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
       produces:
         - application/json
       responses:
         '200':
-          description: List of all transactions retrieved successfully
+          description: List of transactions for the specified month and year retrieved successfully
           schema:
             type: array
             items:
               $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Month or Year
         '401':
           description: Unauthorized
         '500':
           description: Internal Server Error
+
+          
 
   /transactions/{transactionId}:
     get:
@@ -219,80 +229,4 @@ paths:
           description: Internal Server Error
 
 definitions:
-  # ... Existing definitions ...
-
-  User:
-    properties:
-      email:
-        type: string
-        description: user email
-      password:
-        type: string
-        description: user password
-      firstName:
-        type: string
-        description: user first name
-      lastName:
-        type: string
-        description: user last name
-
-  Login:
-    properties:
-      email:
-        type: string
-        description: user email
-      password:
-        type: string
-        description: user password
-
-  ApiResponse:
-    type: object
-    properties:
-      status:
-        type: integer
-      message:
-        type: string
-      body:
-        type: object
-        properties:
-          id:
-            type: string
-          email:
-            type: string
-
-  LoginResponse:
-    type: object
-    properties:
-      token:
-        type: string
-
-  UserProfile:
-    type: object
-    properties:
-      firstName:
-        type: string
-      lastName:
-        type: string
-
-  TransactionUpdate:
-    type: object
-    properties:
-      category:
-        type: string
-        description: Category of the transaction
-      note:
-        type: string
-        description: Note added to the transaction
-
-  Transaction:
-    type: object
-    properties:
-      id:
-        type: string
-        description: Unique identifier for the transaction
-      category:
-        type: string
-        description: Category of the transaction
-      note:
-        type: string
-        description: Note added to the transaction
+  # ... (existing definitions) ...
