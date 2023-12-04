@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-
-// Import your actions from a separate module
+// Import actions
 import { loginUser, fetchUserProfile } from '../serviceLayer/authService';
-
 import '../styles/SignIn.scss';
 
 function SignIn() {
   // State for email and password
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // State for an error message
+  const [error, setError] = useState('');
 
   // Get navigation function and dispatch from hooks
   const navigate = useNavigate();
@@ -38,10 +39,11 @@ function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // Dispatch the login action
       await dispatch(loginUser({ email, password }));
+      setError(''); // Clear the error message if login is successful
     } catch (error) {
       console.error(error.customMessage || 'Login failed');
+      setError(error.customMessage || 'Login failed'); // Set the error message
     }
   };
 
@@ -79,6 +81,7 @@ function SignIn() {
             Sign In
           </button>
         </form>
+        <div className='errorMessage'>{error && <div className="error-message">{error}</div>}</div>
       </section>
     </main>
   );

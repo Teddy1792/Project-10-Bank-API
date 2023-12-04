@@ -29,7 +29,7 @@ export const loginUser = (credentials) => async (dispatch) => {
     return loginData;
   } catch (error) {
     console.error('Login failed:', error.message, error.data);
-    error.customMessage = 'An error occurred while trying to log in.';
+    error.customMessage = 'Invalid email or password. Please try again.';
     throw error;
   }
 };
