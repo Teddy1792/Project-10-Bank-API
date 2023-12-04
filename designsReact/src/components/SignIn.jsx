@@ -42,8 +42,8 @@ function SignIn() {
       await dispatch(loginUser({ email, password }));
       setError(''); // Clear the error message if login is successful
     } catch (error) {
-      console.error(error.customMessage || 'Login failed');
-      setError(error.customMessage || 'Login failed'); // Set the error message
+      console.error(error.customMessage);
+      setError(error.customMessage); // Set the error message
     }
   };
 

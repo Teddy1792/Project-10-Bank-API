@@ -2,6 +2,7 @@ import { SET_AUTH_TOKEN, CLEAR_AUTH_TOKEN, SET_USER_DETAILS } from './authAction
 
 const initialState = {
   authToken: null,
+  user: null, // Initialize user as null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -16,7 +17,8 @@ const authReducer = (state = initialState, action) => {
         ...state,
         authToken: null,
       };
-      case SET_USER_DETAILS: // Handle setting user details
+    case SET_USER_DETAILS:
+      // Set user details using action.payload
       return {
         ...state,
         user: action.payload,

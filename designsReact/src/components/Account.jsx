@@ -18,45 +18,53 @@ function Account() {
   const [editedLastName, setEditedLastName] = useState('');
 
   useEffect(() => {
+    // Check if a token exists; if not, redirect to sign-in page
     if (!token) {
       navigate('/signIn');
       return;
     }
 
+    // Fetch user profile data if the user is not already loaded and a token exists
     if (!user && token) {
       dispatch(fetchUserProfile(token));
     }
   }, [user, token, dispatch, navigate]);
 
   if (!user) {
+    // If user data is not yet available, display a loading message
     return <div>Loading user data...</div>;
   }
 
   const { firstName, lastName } = user;
 
   const handleEditClick = () => {
+    // Enable edit mode and populate the edited fields with user's current data
     setIsEditing(true);
     setEditedFirstName(firstName);
     setEditedLastName(lastName);
   };
 
   const handleSaveClick = () => {
+    // Prepare updated user profile information
     const updatedInfo = {
       firstName: editedFirstName,
       lastName: editedLastName,
     };
   
+    // Dispatch an action to update the user's profile
     dispatch(updateUserProfile(token, updatedInfo))
       .then(() => {
-        setIsEditing(false); // Close edit mode on successful update
+        // Close edit mode on successful update
+        setIsEditing(false);
       })
       .catch(error => {
         console.error('Error updating profile:', error);
-        // Optionally, handle error in UI
+        // Optionally, handle error in the UI or display a user-friendly error message
       });
   };
 
   const handleCancelClick = () => {
+    // Cancel edit mode
     setIsEditing(false);
   };
 
