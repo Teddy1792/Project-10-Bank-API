@@ -3,7 +3,7 @@ import { setAuthToken, setUserDetails } from './authActions';
 const API_URL = 'http://localhost:3001/api/v1';
 
 // Function for logging in
-export const loginUser = (credentials, rememberMe) => async (dispatch) => {
+export const loginUser = (credentials) => async (dispatch) => {
   try {
     const loginResponse = await fetch(`${API_URL}/user/login`, {
       method: 'POST',
@@ -23,11 +23,6 @@ export const loginUser = (credentials, rememberMe) => async (dispatch) => {
     const loginData = await loginResponse.json();
 
     if (loginData && loginData.body && loginData.body.token) {
-      if (rememberMe) {
-        localStorage.setItem('token', loginData.body.token);
-      } else {
-        sessionStorage.setItem('token', loginData.body.token);
-      }
       dispatch(setAuthToken(loginData.body.token));
     }
 
